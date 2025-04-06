@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jam Tangan - Toko Online</title>
   <style>
     * {
@@ -13,13 +13,14 @@
     body {
       font-family: sans-serif;
       background-color: #f5f4f4;
-      padding: 0 100px;
+      padding: 0 20px;
     }
     header.nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      padding: 30px 0;
+      padding: 20px 0;
     }
     .logo h1 {
       font-weight: 600;
@@ -30,12 +31,15 @@
     }
     .menu {
       display: flex;
-      gap: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
     }
     .menu ul {
       list-style: none;
       display: flex;
-      gap: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
     }
     .menu li a {
       text-decoration: none;
@@ -56,20 +60,36 @@
       background-color: #570e0e;
       margin-top: 5px;
     }
+    @media (max-width: 768px) {
+      .content {
+        flex-direction: column;
+      }
+      .content-right img {
+        width: 100%;
+        max-width: 300px;
+      }
+      .menu ul {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
 
     .form-container {
       display: none;
       position: fixed;
       top: 100px;
-      right: 100px;
+      right: 10%;
       background: #fff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       z-index: 999;
-      width: 300px;
+      width: 90%;
+      max-width: 300px;
     }
-    .form-container input {
+    .form-container input,
+    .form-container button {
       width: 100%;
       margin-top: 10px;
       padding: 10px;
@@ -77,12 +97,9 @@
       border: 1px solid #ccc;
     }
     .form-container button {
-      margin-top: 10px;
-      padding: 10px;
       background-color: brown;
       color: white;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
     }
 
@@ -97,11 +114,11 @@
       flex: 1;
     }
     .content-left h2 {
-      font-size: 42px;
+      font-size: 32px;
       margin-bottom: 20px;
     }
     .content-left p {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.6;
       margin-bottom: 20px;
     }
@@ -177,7 +194,8 @@
       margin-top: 10px;
     }
     .kasir select,
-    .kasir input {
+    .kasir input,
+    .kasir textarea {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -217,20 +235,18 @@
     </div>
   </header>
 
-  <!-- Form Login -->
   <div id="loginForm" class="form-container">
     <h4>Form Login</h4>
-    <input type="text" id="loginNama" placeholder="Nama">
-    <input type="password" id="loginPassword" placeholder="Password">
+    <input type="text" placeholder="Nama">
+    <input type="password" placeholder="Password">
     <button onclick="submitLogin()">Login</button>
   </div>
 
-  <!-- Form Daftar -->
   <div id="daftarForm" class="form-container">
     <h4>Form Daftar</h4>
-    <input type="text" id="daftarNama" placeholder="Nama">
-    <input type="email" id="daftarEmail" placeholder="Email">
-    <input type="password" id="daftarPassword" placeholder="Password">
+    <input type="text" placeholder="Nama">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
     <button onclick="submitDaftar()">Daftar</button>
   </div>
 
@@ -301,13 +317,12 @@
     <input type="number" id="jumlah" min="1" value="1" />
 
     <label for="alamat">Alamat Pengiriman:</label>
-    <input type="text" id="alamat" placeholder="Contoh: Jl. Merdeka No. 123, Jakarta">
+    <textarea id="alamat" placeholder="Masukkan alamat lengkap..."></textarea>
 
     <label for="metode">Metode Pembayaran:</label>
     <select id="metode">
-      <option value="">-- Pilih Metode --</option>
-      <option value="Kartu Kredit">Kartu Kredit</option>
-      <option value="COD">Bayar di Tempat (COD)</option>
+      <option value="cod">COD (Bayar di Tempat)</option>
+      <option value="kartu">Kartu Kredit / Debit</option>
     </select>
 
     <button onclick="hitungTotal()">Pesan & Beli</button>
@@ -332,16 +347,15 @@
     function hitungTotal() {
       const harga = parseInt(document.getElementById('produkSelect').value);
       const jumlah = parseInt(document.getElementById('jumlah').value);
-      const alamat = document.getElementById('alamat').value;
-      const metode = document.getElementById('metode').value;
+      const alamat = document.getElementById('alamat').value.trim();
 
-      if (!harga || !jumlah || !alamat || !metode) {
-        document.getElementById('totalHarga').textContent = 'Lengkapi semua data untuk memesan.';
+      if (!harga || !jumlah || alamat === '') {
+        document.getElementById('totalHarga').textContent = 'Silakan lengkapi semua data pembelian.';
         return;
       }
 
       const total = harga * jumlah;
-      document.getElementById('totalHarga').textContent = `Total Harga: Rp${total.toLocaleString('id-ID')}\nMetode: ${metode}\nKirim ke: ${alamat}`;
+      document.getElementById('totalHarga').textContent = 'Total Harga: Rp' + total.toLocaleString('id-ID');
     }
   </script>
 </body>
