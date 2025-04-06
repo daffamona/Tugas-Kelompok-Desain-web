@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jam Tangan - Toko Online</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: sans-serif;
+      background-color: #f5f4f4;
+      padding: 0 100px;
+    }
+    header.nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 0;
+    }
+    .logo h1 {
+      font-weight: 600;
+      color: #b91717;
+    }
+    .logo b {
+      color: #7e1313;
+    }
+    .menu {
+      display: flex;
+      gap: 40px;
+    }
+    .menu ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    .menu li a {
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: black;
+      cursor: pointer;
+    }
+    .menu-kanan li a {
+      color: #b91717;
+      font-weight: bold;
+    }
+    .menu-kiri .active::after {
+      content: '';
+      display: block;
+      width: 50%;
+      height: 3px;
+      background-color: #570e0e;
+      margin-top: 5px;
+    }
+
+    .form-container {
+      display: none;
+      position: fixed;
+      top: 100px;
+      right: 100px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      z-index: 999;
+      width: 300px;
+    }
+    .form-container input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .form-container button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: brown;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      gap: 30px;
+    }
+    .content-left {
+      flex: 1;
+    }
+    .content-left h2 {
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+    .content-left p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .content-left button {
+      padding: 10px 20px;
+      background: #492222;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .category {
+      margin: 60px 0;
+    }
+    .category h3 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .card-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      width: 200px;
+      position: relative;
+      text-align: center;
+      outline: 2px solid rgba(116, 6, 6, 0.65);
+    }
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 15px 15px #7a1818;
+    }
+    .card .watch-title {
+      margin-top: 60px;
+      font-weight: bold;
+    }
+    .card p {
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .services ul, .about p {
+      max-width: 600px;
+      margin: auto;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .kasir {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .kasir h3 {
+      margin-bottom: 20px;
+    }
+    .kasir label {
+      display: block;
+      margin-top: 10px;
+    }
+    .kasir select,
+    .kasir input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .kasir button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: brown;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="logo"><h1>Jam<b>Tangan</b></h1></div>
+    <div class="menu">
+      <ul class="menu-kiri">
+        <li><a class="active" href="#">Beranda</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#kasir">Kasir</a></li>
+      </ul>
+      <ul class="menu-kanan">
+        <li><a onclick="toggleForm('loginForm')">Login</a></li>
+        <li><a onclick="toggleForm('daftarForm')">Daftar</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Form Login -->
+  <div id="loginForm" class="form-container">
+    <h4>Form Login</h4>
+    <input type="text" id="loginNama" placeholder="Nama">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="submitLogin()">Login</button>
+  </div>
+
+  <!-- Form Daftar -->
+  <div id="daftarForm" class="form-container">
+    <h4>Form Daftar</h4>
+    <input type="text" id="daftarNama" placeholder="Nama">
+    <input type="email" id="daftarEmail" placeholder="Email">
+    <input type="password" id="daftarPassword" placeholder="Password">
+    <button onclick="submitDaftar()">Daftar</button>
+  </div>
+
+  <section class="content">
+    <div class="content-left">
+      <h2>Jam tangan terbaik<br>temani setiap detikmu.</h2>
+      <p>Koleksi jam tangan premium untuk menunjang gaya dan kepercayaan diri Anda.</p>
+      <button onclick="document.getElementById('produk').scrollIntoView()">Lihat Produk</button>
+    </div>
+    <div class="content-right">
+      <img src="Watch.jpeg" alt="Jam Elegan">
+    </div>
+  </section>
+
+  <section class="category" id="produk">
+    <h3>Produk Unggulan</h3>
+    <div class="card-list">
+      <div class="card">
+        <img src="Rolex.jpeg" alt="Rolex">
+        <div class="watch-title">Rolex</div>
+        <p>Desain elegan dan teknologi Swiss terbaik.</p>
+      </div>
+      <div class="card">
+        <img src="Jam Casio.jpeg" alt="Casio">
+        <div class="watch-title">Casio</div>
+        <p>Tangguh, sporty, dan terjangkau.</p>
+      </div>
+      <div class="card">
+        <img src="Jam Breitling.jpeg" alt="Breitling">
+        <div class="watch-title">Breitling</div>
+        <p>Presisi tinggi untuk petualang sejati.</p>
+      </div>
+      <div class="card">
+        <img src="Jam Omega.jpeg" alt="Omega">
+        <div class="watch-title">Omega</div>
+        <p>Ikon klasik yang mewah dan berkelas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="category services" id="layanan">
+    <h3>Layanan Kami</h3>
+    <ul>
+      <li>✔️ Garansi Resmi 2 Tahun</li>
+      <li>✔️ Gratis Ongkir Seluruh Indonesia</li>
+      <li>✔️ Pengembalian dalam 7 Hari</li>
+      <li>✔️ Customer Service 24 Jam</li>
+    </ul>
+  </section>
+
+  <section class="category about" id="tentang">
+    <h3>Tentang Kami</h3>
+    <p>Jam Tangan adalah toko online yang menyediakan jam tangan berkualitas tinggi dari berbagai merek ternama. Kami percaya setiap detik itu berharga, dan jam tangan Anda harus mencerminkan itu.</p>
+  </section>
+
+  <section class="kasir" id="kasir">
+    <h3>Kasir</h3>
+    <label for="produkSelect">Pilih Produk:</label>
+    <select id="produkSelect">
+      <option value="0">-- Pilih Produk --</option>
+      <option value="5000000">Rolex - Rp5.000.000</option>
+      <option value="1500000">Casio - Rp1.500.000</option>
+      <option value="3500000">Breitling - Rp3.500.000</option>
+      <option value="4000000">Omega - Rp4.000.000</option>
+    </select>
+
+    <label for="jumlah">Jumlah:</label>
+    <input type="number" id="jumlah" min="1" value="1" />
+
+    <label for="alamat">Alamat Pengiriman:</label>
+    <input type="text" id="alamat" placeholder="Contoh: Jl. Merdeka No. 123, Jakarta">
+
+    <label for="metode">Metode Pembayaran:</label>
+    <select id="metode">
+      <option value="">-- Pilih Metode --</option>
+      <option value="Kartu Kredit">Kartu Kredit</option>
+      <option value="COD">Bayar di Tempat (COD)</option>
+    </select>
+
+    <button onclick="hitungTotal()">Pesan & Beli</button>
+    <div class="result" id="totalHarga">Total Harga: Rp0</div>
+  </section>
+
+  <script>
+    function toggleForm(formId) {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('daftarForm').style.display = 'none';
+      document.getElementById(formId).style.display = 'block';
+    }
+
+    function submitLogin() {
+      alert('Login berhasil (simulasi).');
+    }
+
+    function submitDaftar() {
+      alert('Pendaftaran berhasil (simulasi).');
+    }
+
+    function hitungTotal() {
+      const harga = parseInt(document.getElementById('produkSelect').value);
+      const jumlah = parseInt(document.getElementById('jumlah').value);
+      const alamat = document.getElementById('alamat').value;
+      const metode = document.getElementById('metode').value;
+
+      if (!harga || !jumlah || !alamat || !metode) {
+        document.getElementById('totalHarga').textContent = 'Lengkapi semua data untuk memesan.';
+        return;
+      }
+
+      const total = harga * jumlah;
+      document.getElementById('totalHarga').textContent = `Total Harga: Rp${total.toLocaleString('id-ID')}\nMetode: ${metode}\nKirim ke: ${alamat}`;
+    }
+  </script>
+</body>
+</html>
